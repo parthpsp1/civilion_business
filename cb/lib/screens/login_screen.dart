@@ -1,15 +1,53 @@
+import 'package:cb/auth/custom_firebase_auth.dart';
+import 'package:cb/screens/add_data.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
   @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  bool isLogin = true;
+  String? errorMessage = '';
+
+  @override
   Widget build(BuildContext context) {
-    TextEditingController _emailController = TextEditingController();
-    TextEditingController _passwordController = TextEditingController();
+    Future<bool> signInWithEmailAndPassword() async {
+      try {
+        await CustomFireBaseAuth().signInWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        );
+        print(CustomFireBaseAuth().currentUser);
+        return true;
+      } on FirebaseAuthException catch (e) {
+        setState(() {
+          errorMessage = e.message;
+        });
+        return false;
+      }
+    }
+
+    Future<void> createUserWithEmailAndPassword() async {
+      try {
+        await CustomFireBaseAuth().createUserWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        );
+      } on FirebaseAuthException catch (e) {
+        errorMessage = e.message;
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Login'),
+        title: const Text('Vendor Login'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -17,7 +55,7 @@ class LoginScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             TextField(
-              controller: _emailController,
+              controller: emailController,
               decoration: const InputDecoration(
                 labelText: 'Email',
                 border: OutlineInputBorder(),
@@ -25,7 +63,7 @@ class LoginScreen extends StatelessWidget {
             ),
             const SizedBox(height: 16.0),
             TextField(
-              controller: _passwordController,
+              controller: passwordController,
               decoration: const InputDecoration(
                 labelText: 'Password',
                 border: OutlineInputBorder(),
@@ -33,17 +71,54 @@ class LoginScreen extends StatelessWidget {
               obscureText: true,
             ),
             const SizedBox(height: 16.0),
-            ElevatedButton(
-              onPressed: () {
-                String email = _emailController.text;
-                String password = _passwordController.text;
-                // Validate email and password, and handle login logic
-                // For simplicity, this example just prints the email and password
-                print('Email: $email');
-                print('Password: $password');
-              },
-              child: const Text('Login'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () async {
+                    bool isSuccessfulLogin = await signInWithEmailAndPassword();
+                    if (isSuccessfulLogin) {
+                      if (context.mounted) {
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => const AddData(),
+                          ),
+                        );
+                      }
+                    }
+                  },
+                  child: const Text('Login'),
+                ),
+                const SizedBox(
+                  width: 20,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    if (emailController.text != '' ||
+                        emailController.text.isNotEmpty) {
+                      createUserWithEmailAndPassword();
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => const AddData(),
+                        ),
+                      );
+                    }
+                  },
+                  child: const Text('Create'),
+                ),
+              ],
             ),
+            const SizedBox(
+              height: 20,
+            ),
+            Text(
+              errorMessage == '' ? '' : 'Error: $errorMessage',
+              style: const TextStyle(
+                color: Colors.red,
+                fontSize: 16,
+              ),
+              textAlign: TextAlign.center,
+            )
           ],
         ),
       ),
