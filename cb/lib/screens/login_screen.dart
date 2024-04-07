@@ -24,7 +24,6 @@ class _LoginScreenState extends State<LoginScreen> {
           email: emailController.text,
           password: passwordController.text,
         );
-        print(CustomFireBaseAuth().currentUser);
         return true;
       } on FirebaseAuthException catch (e) {
         setState(() {
@@ -34,14 +33,18 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     }
 
-    Future<void> createUserWithEmailAndPassword() async {
+    Future<bool> createUserWithEmailAndPassword() async {
       try {
         await CustomFireBaseAuth().createUserWithEmailAndPassword(
           email: emailController.text,
           password: passwordController.text,
         );
+        return true;
       } on FirebaseAuthException catch (e) {
-        errorMessage = e.message;
+        setState(() {
+          errorMessage = e.message;
+        });
+        return false;
       }
     }
 
@@ -93,15 +96,20 @@ class _LoginScreenState extends State<LoginScreen> {
                   width: 20,
                 ),
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (emailController.text != '' ||
                         emailController.text.isNotEmpty) {
-                      createUserWithEmailAndPassword();
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                          builder: (context) => const AddData(),
-                        ),
-                      );
+                      bool isSuccessfulLogin =
+                          await createUserWithEmailAndPassword();
+                      if (isSuccessfulLogin) {
+                        if (context.mounted) {
+                          Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(
+                              builder: (context) => const AddData(),
+                            ),
+                          );
+                        }
+                      }
                     }
                   },
                   child: const Text('Create'),

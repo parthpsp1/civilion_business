@@ -1,7 +1,7 @@
 import 'package:cb/auth/custom_firebase_auth.dart';
 import 'package:cb/screens/login_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class AddData extends StatefulWidget {
   const AddData({super.key});
@@ -35,6 +35,20 @@ class _AddDataState extends State<AddData> {
     "Labor",
   ];
 
+  Future addData() async {
+    final entry = {
+      "name": nameController.text,
+      "profession": selectedLabel,
+      "actual_work": actualWorkController.text,
+      "address": addressController.text,
+      "charges": chargesController.text,
+      "email": emailController.text,
+      "firm_name": firmNameController.text,
+      "mobile": mobileController.text
+    };
+    FirebaseFirestore.instance.collection('vendor').add(entry);
+  }
+
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -47,11 +61,9 @@ class _AddDataState extends State<AddData> {
             TextButton.icon(
               onPressed: () {
                 CustomFireBaseAuth().signOut();
-                Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(
-                      builder: (context) => const LoginScreen(),
-                    ),
-                    (route) => false);
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (context) => const LoginScreen(),
+                ));
               },
               icon: const Icon(Icons.logout),
               label: const Text('Logout'),
@@ -186,18 +198,10 @@ class _AddDataState extends State<AddData> {
                       ),
                       const SizedBox(height: 20),
                       ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           if (_formKey.currentState != null &&
                               _formKey.currentState!.validate()) {
-                            // Form is valid, submit data or perform any action here
-                            // For now, let's print the form values
-                            addData('Name', nameController);
-                            addData('Actual Work', actualWorkController);
-                            addData('Firm Name', firmNameController);
-                            addData('Address', addressController);
-                            addData('Charges', chargesController);
-                            addData('Mobile', mobileController);
-                            addData('Email', emailController);
+                            await addData();
                           } else {
                             return;
                           }
