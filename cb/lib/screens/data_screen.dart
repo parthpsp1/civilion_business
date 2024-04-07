@@ -28,82 +28,83 @@ class DataScreen extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
-          if (snapshot.hasData == false) {
-            return const Center(
-              child: Text('No data found'),
-            );
-          }
+
           if (snapshot.hasData) {
             final vendorData = snapshot.data!;
-            return ListView.builder(
-                itemCount: vendorData.length,
-                itemBuilder: (context, index) {
-                  final vendor = vendorData[index];
-                  return Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    margin: const EdgeInsets.all(10),
-                    elevation: 2,
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    child: Padding(
-                      padding: const EdgeInsets.all(12),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
+            return vendorData.isEmpty
+                ? const Center(
+                    child: Text('No Data Found'),
+                  )
+                : ListView.builder(
+                    itemCount: vendorData.length,
+                    itemBuilder: (context, index) {
+                      final vendor = vendorData[index];
+                      return Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        margin: const EdgeInsets.all(10),
+                        elevation: 2,
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        child: Padding(
+                          padding: const EdgeInsets.all(12),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    vendor.name,
+                                    style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {
+                                      launchCustomUrl(vendor.mobile);
+                                    },
+                                    icon: const Icon(Icons.phone_outlined),
+                                  )
+                                ],
+                              ),
+                              const SizedBox(height: 10),
                               Text(
-                                vendor.name,
+                                vendor.profession,
                                 style: const TextStyle(
-                                  fontSize: 18,
+                                  fontSize: 14,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              IconButton(
-                                onPressed: () {
-                                  launchCustomUrl(vendor.mobile);
-                                },
-                                icon: const Icon(Icons.phone_outlined),
-                              )
+                              const SizedBox(height: 6),
+                              Text(
+                                "Mobile: ${vendor.mobile}",
+                              ),
+                              const SizedBox(height: 6),
+                              Text(
+                                vendor.firmName.isEmpty
+                                    ? ''
+                                    : "Firm Name: ${vendor.firmName}",
+                              ),
+                              const SizedBox(height: 6),
+                              Text(
+                                "Charges: ${vendor.charges}",
+                              ),
+                              const SizedBox(height: 6),
+                              Text(
+                                "Address: ${vendor.address}",
+                              ),
+                              const SizedBox(height: 6),
+                              Text(
+                                "Email: ${vendor.email}",
+                              ),
                             ],
                           ),
-                          const SizedBox(height: 10),
-                          Text(
-                            vendor.profession,
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 6),
-                          Text(
-                            "Mobile: ${vendor.mobile}",
-                          ),
-                          const SizedBox(height: 6),
-                          Text(
-                            vendor.firmName.isEmpty
-                                ? ''
-                                : "Firm Name: ${vendor.firmName}",
-                          ),
-                          const SizedBox(height: 6),
-                          Text(
-                            "Charges: ${vendor.charges}",
-                          ),
-                          const SizedBox(height: 6),
-                          Text(
-                            "Address: ${vendor.address}",
-                          ),
-                          const SizedBox(height: 6),
-                          Text(
-                            "Email: ${vendor.email}",
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                });
+                        ),
+                      );
+                    });
           } else if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
           } else {

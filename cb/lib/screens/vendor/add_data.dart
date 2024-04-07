@@ -66,15 +66,9 @@ class _AddDataState extends State<AddData> {
             isLoading
                 ? const Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                        ],
+                      Center(
+                        child: CircularProgressIndicator(),
                       ),
                     ],
                   )
@@ -98,15 +92,14 @@ class _AddDataState extends State<AddData> {
                             }).toList(),
                             decoration: const InputDecoration(
                                 labelText: 'Select Profession'),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please select a label';
-                              }
-                              return null;
-                            },
                           ),
                           TextFormField(
                             controller: nameController,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(
+                                RegExp(r'[a-zA-Z]'),
+                              ),
+                            ],
                             decoration:
                                 const InputDecoration(labelText: 'Name'),
                             validator: (value) {
@@ -118,6 +111,11 @@ class _AddDataState extends State<AddData> {
                           ),
                           TextFormField(
                             controller: actualWorkController,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(
+                                RegExp(r'[a-zA-Z0-9]'),
+                              ),
+                            ],
                             decoration:
                                 const InputDecoration(labelText: 'Actual Work'),
                             validator: (value) {
@@ -129,6 +127,11 @@ class _AddDataState extends State<AddData> {
                           ),
                           TextFormField(
                             controller: firmNameController,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(
+                                RegExp(r'[a-zA-Z0-9]'),
+                              ),
+                            ],
                             decoration:
                                 const InputDecoration(labelText: 'Firm Name'),
                             validator: (value) {
@@ -140,6 +143,11 @@ class _AddDataState extends State<AddData> {
                           ),
                           TextFormField(
                             controller: addressController,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(
+                                RegExp(r'[a-zA-Z0-9]'),
+                              ),
+                            ],
                             decoration:
                                 const InputDecoration(labelText: 'Address'),
                             validator: (value) {
@@ -151,6 +159,11 @@ class _AddDataState extends State<AddData> {
                           ),
                           TextFormField(
                             controller: chargesController,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(
+                                RegExp(r'[a-zA-Z0-9]'),
+                              ),
+                            ],
                             decoration:
                                 const InputDecoration(labelText: 'Charges'),
                             validator: (value) {
@@ -209,6 +222,9 @@ class _AddDataState extends State<AddData> {
                                   );
                                 }
                               } else {
+                                setState(() {
+                                  isLoading = false;
+                                });
                                 return;
                               }
                             },
