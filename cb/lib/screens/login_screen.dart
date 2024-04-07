@@ -58,11 +58,31 @@ class _VendorLoginScreenState extends State<VendorLoginScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Container(
+              clipBehavior: Clip.antiAlias,
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(20),
+                ),
+              ),
+              child: Image.asset(
+                "assets/logo/app_logo.jpg",
+                height: 200,
+                width: 200,
+              ),
+            ),
+            const SizedBox(
+              height: 80,
+            ),
             TextField(
               controller: emailController,
               decoration: const InputDecoration(
                 labelText: 'Email',
-                border: OutlineInputBorder(),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(16),
+                  ),
+                ),
               ),
             ),
             const SizedBox(height: 16.0),
@@ -70,7 +90,11 @@ class _VendorLoginScreenState extends State<VendorLoginScreen> {
               controller: passwordController,
               decoration: const InputDecoration(
                 labelText: 'Password',
-                border: OutlineInputBorder(),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(16),
+                  ),
+                ),
               ),
               obscureText: true,
             ),
@@ -111,6 +135,8 @@ class _VendorLoginScreenState extends State<VendorLoginScreen> {
                           );
                         }
                       }
+                    } else {
+                      null;
                     }
                   },
                   child: const Text('Create'),

@@ -20,7 +20,7 @@ class DataScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('All $vendorProfession entries'),
+        title: Text('All $vendorProfession data'),
       ),
       body: StreamBuilder<List<Vendor>>(
         stream: readData(),
@@ -71,14 +71,6 @@ class DataScreen extends StatelessWidget {
                                 ],
                               ),
                               const SizedBox(height: 10),
-                              Text(
-                                vendor.profession,
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              const SizedBox(height: 6),
                               Text(
                                 "Mobile: ${vendor.mobile}",
                               ),

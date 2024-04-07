@@ -1,3 +1,4 @@
+import 'package:blur/blur.dart';
 import 'package:cb/data/label.dart';
 import 'package:cb/model/vendor_data_model.dart';
 import 'package:cb/screens/data_screen.dart';
@@ -35,38 +36,54 @@ class _HomeScreenState extends State<HomeScreen> {
           )
         ],
       ),
-      body: ListView.builder(
+      body: GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          mainAxisExtent: 140,
+        ),
         itemCount: labels.length,
         itemBuilder: (context, index) {
           return Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 12,
-              horizontal: 20,
-            ),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 48,
-                  width: double.infinity,
-                  child: OutlinedButton(
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => DataScreen(
-                            vendorProfession: labels[index],
-                          ),
+            padding: const EdgeInsets.all(4.0),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => DataScreen(
+                      vendorProfession: labels[index],
+                    ),
+                  ),
+                );
+              },
+              child: Stack(
+                children: [
+                  Blur(
+                    blur: 0.4,
+                    blurColor: Colors.black,
+                    child: Image.asset(
+                      labelImagePaths[labels[index]]!,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        left: 6,
+                        bottom: 4,
+                      ),
+                      child: Text(
+                        labels[index],
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
                         ),
-                      );
-                    },
-                    child: Text(
-                      labels[index],
-                      style: const TextStyle(
-                        fontSize: 21,
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         },

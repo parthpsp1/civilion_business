@@ -87,7 +87,7 @@ class ShowData extends StatelessWidget {
                                         ),
                                       );
 
-                                      if (confirmed ?? false) {
+                                      if (confirmed) {
                                         try {
                                           QuerySnapshot querySnapshot =
                                               await FirebaseFirestore.instance
