@@ -1,3 +1,4 @@
+import 'package:cb/helpers/helper.dart';
 import 'package:cb/model/vendor_data_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,9 @@ class DataScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('All $vendorProfession entries'),
+      ),
       body: StreamBuilder<List<Vendor>>(
         stream: readData(),
         builder: (context, snapshot) {
@@ -47,12 +51,23 @@ class DataScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(
-                            vendor.name,
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                vendor.name,
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  launchCustomUrl(vendor.mobile);
+                                },
+                                icon: const Icon(Icons.phone_outlined),
+                              )
+                            ],
                           ),
                           const SizedBox(height: 10),
                           Text(

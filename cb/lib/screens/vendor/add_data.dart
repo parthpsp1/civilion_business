@@ -68,7 +68,14 @@ class _AddDataState extends State<AddData> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Center(child: CircularProgressIndicator()),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        ],
+                      ),
                     ],
                   )
                 : Expanded(
@@ -194,6 +201,12 @@ class _AddDataState extends State<AddData> {
                                     selectedLabel = "Architect";
                                     isLoading = false;
                                   });
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text('Data Added'),
+                                      backgroundColor: Colors.green,
+                                    ),
+                                  );
                                 }
                               } else {
                                 return;
