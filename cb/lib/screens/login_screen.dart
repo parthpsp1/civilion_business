@@ -1,16 +1,17 @@
 import 'package:cb/auth/custom_firebase_auth.dart';
-import 'package:cb/screens/add_data.dart';
+import 'package:cb/screens/vendor/add_data.dart';
+import 'package:cb/screens/vendor/dashboard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class VendorLoginScreen extends StatefulWidget {
+  const VendorLoginScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<VendorLoginScreen> createState() => _VendorLoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _VendorLoginScreenState extends State<VendorLoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool isLogin = true;
@@ -84,7 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       if (context.mounted) {
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
-                            builder: (context) => const AddData(),
+                            builder: (context) => const VendorDashboard(),
                           ),
                         );
                       }

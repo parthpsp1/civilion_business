@@ -1,38 +1,22 @@
+import 'package:cb/auth/custom_firebase_auth.dart';
 import 'package:cb/model/vendor_data_model.dart';
-import 'package:cb/screens/login_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class ShowData extends StatelessWidget {
+  const ShowData({super.key});
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  Stream<List<Vendor>> readData() =>
-      FirebaseFirestore.instance.collection('vendor').snapshots().map((event) =>
-          event.docs.map((doc) => Vendor.fromJson(doc.data())).toList());
+  Stream<List<Vendor>> readData() => FirebaseFirestore.instance
+      .collection('vendor')
+      .snapshots()
+      .map((event) => event.docs
+          .map((doc) => Vendor.fromJson(doc.data()))
+          .where((vendor) =>
+              vendor.email == CustomFireBaseAuth().currentUser?.email)
+          .toList());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Civilion Business'),
-        actions: [
-          TextButton.icon(
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const LoginScreen(),
-                ),
-              );
-            },
-            icon: const Icon(Icons.login),
-            label: const Text('Vendor Login'),
-          )
-        ],
-      ),
       body: StreamBuilder<List<Vendor>>(
         stream: readData(),
         builder: (context, snapshot) {
