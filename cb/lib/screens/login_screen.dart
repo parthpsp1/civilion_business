@@ -53,108 +53,111 @@ class _VendorLoginScreenState extends State<VendorLoginScreen> {
       appBar: AppBar(
         title: const Text('Vendor Login'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              clipBehavior: Clip.antiAlias,
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(20),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                clipBehavior: Clip.antiAlias,
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(20),
+                  ),
+                ),
+                child: Image.asset(
+                  "assets/logo/app_logo.jpg",
+                  height: 140,
+                  width: 140,
                 ),
               ),
-              child: Image.asset(
-                "assets/logo/app_logo.jpg",
-                height: 200,
-                width: 200,
+              const SizedBox(
+                height: 80,
               ),
-            ),
-            const SizedBox(
-              height: 80,
-            ),
-            TextField(
-              controller: emailController,
-              decoration: const InputDecoration(
-                labelText: 'Email',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(16),
+              TextField(
+                controller: emailController,
+                decoration: const InputDecoration(
+                  labelText: 'Email',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(16),
+                    ),
                   ),
                 ),
               ),
-            ),
-            const SizedBox(height: 16.0),
-            TextField(
-              controller: passwordController,
-              decoration: const InputDecoration(
-                labelText: 'Password',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(16),
+              const SizedBox(height: 16.0),
+              TextField(
+                controller: passwordController,
+                decoration: const InputDecoration(
+                  labelText: 'Password',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(16),
+                    ),
                   ),
                 ),
+                obscureText: true,
               ),
-              obscureText: true,
-            ),
-            const SizedBox(height: 16.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  onPressed: () async {
-                    bool isSuccessfulLogin = await signInWithEmailAndPassword();
-                    if (isSuccessfulLogin) {
-                      if (context.mounted) {
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) => const VendorDashboard(),
-                          ),
-                        );
-                      }
-                    }
-                  },
-                  child: const Text('Login'),
-                ),
-                const SizedBox(
-                  width: 20,
-                ),
-                ElevatedButton(
-                  onPressed: () async {
-                    if (emailController.text != '' ||
-                        emailController.text.isNotEmpty) {
+              const SizedBox(height: 16.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: () async {
                       bool isSuccessfulLogin =
-                          await createUserWithEmailAndPassword();
+                          await signInWithEmailAndPassword();
                       if (isSuccessfulLogin) {
                         if (context.mounted) {
                           Navigator.of(context).pushReplacement(
                             MaterialPageRoute(
-                              builder: (context) => const AddData(),
+                              builder: (context) => const VendorDashboard(),
                             ),
                           );
                         }
                       }
-                    } else {
-                      null;
-                    }
-                  },
-                  child: const Text('Create'),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Text(
-              errorMessage == '' ? '' : 'Error: $errorMessage',
-              style: const TextStyle(
-                color: Colors.red,
-                fontSize: 16,
+                    },
+                    child: const Text('Login'),
+                  ),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  ElevatedButton(
+                    onPressed: () async {
+                      if (emailController.text != '' ||
+                          emailController.text.isNotEmpty) {
+                        bool isSuccessfulLogin =
+                            await createUserWithEmailAndPassword();
+                        if (isSuccessfulLogin) {
+                          if (context.mounted) {
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (context) => const VendorDashboard(),
+                              ),
+                            );
+                          }
+                        }
+                      } else {
+                        null;
+                      }
+                    },
+                    child: const Text('Create'),
+                  ),
+                ],
               ),
-              textAlign: TextAlign.center,
-            )
-          ],
+              const SizedBox(
+                height: 20,
+              ),
+              Text(
+                errorMessage == '' ? '' : 'Error: $errorMessage',
+                style: const TextStyle(
+                  color: Colors.red,
+                  fontSize: 16,
+                ),
+                textAlign: TextAlign.center,
+              )
+            ],
+          ),
         ),
       ),
     );

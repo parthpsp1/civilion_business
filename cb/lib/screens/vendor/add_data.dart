@@ -1,4 +1,5 @@
 import 'package:cb/auth/custom_firebase_auth.dart';
+import 'package:cb/data/label.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,7 +20,8 @@ class _AddDataState extends State<AddData> {
   TextEditingController chargesController = TextEditingController();
   TextEditingController mobileController = TextEditingController();
 
-  String selectedLabel = "Architect"; // Default selected label
+  String selectedLabel = "Architect";
+  String specialityLabel = "";
 
   List<String> labels = [
     "Architect",
@@ -109,21 +111,25 @@ class _AddDataState extends State<AddData> {
                               return null;
                             },
                           ),
-                          TextFormField(
-                            controller: actualWorkController,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.allow(
-                                RegExp(r'[a-zA-Z0-9]'),
-                              ),
-                            ],
-                            decoration:
-                                const InputDecoration(labelText: 'Actual Work'),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your actual work';
-                              }
-                              return null;
+                          DropdownButtonFormField<String>(
+                            value: specialityLabel,
+                            onChanged: (String? value) {
+                              setState(() {
+                                specialityLabel = value!;
+                              });
                             },
+                            items: specialityLabels[selectedLabel]!
+                                .map((String label) {
+                                  return DropdownMenuItem<String>(
+                                    value: label,
+                                    child: Text(label),
+                                  );
+                                })
+                                .toList(),
+
+                            decoration: const InputDecoration(
+                              labelText: 'Select Speciality',
+                            ),
                           ),
                           TextFormField(
                             controller: firmNameController,
