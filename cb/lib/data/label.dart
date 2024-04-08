@@ -73,10 +73,10 @@ Map<String, List<String>> specialityLabels = {
     "Geotechnical Engg.",
   ],
   "Project Manager": [
-    "NA",
+    "Project Manager",
   ],
   "Labor": [
-    "NA",
+    "Labor",
   ],
 };
 

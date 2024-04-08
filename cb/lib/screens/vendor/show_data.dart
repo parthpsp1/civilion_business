@@ -104,30 +104,36 @@ class ShowData extends StatelessWidget {
                                                 .doc(docId)
                                                 .delete();
 
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              SnackBar(
-                                                content: Text(
-                                                    '${vendor.name} deleted'),
-                                              ),
-                                            );
+                                            if (context.mounted) {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                SnackBar(
+                                                  content: Text(
+                                                      '${vendor.name} deleted'),
+                                                ),
+                                              );
+                                            }
                                           } else {
+                                            if (context.mounted) {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                SnackBar(
+                                                  content: Text(
+                                                      '${vendor.name} not found'),
+                                                ),
+                                              );
+                                            }
+                                          }
+                                        } catch (error) {
+                                          if (context.mounted) {
                                             ScaffoldMessenger.of(context)
                                                 .showSnackBar(
                                               SnackBar(
                                                 content: Text(
-                                                    '${vendor.name} not found'),
+                                                    'Failed to delete ${vendor.name}'),
                                               ),
                                             );
                                           }
-                                        } catch (error) {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(
-                                            SnackBar(
-                                              content: Text(
-                                                  'Failed to delete ${vendor.name}'),
-                                            ),
-                                          );
                                         }
                                       }
                                     },
@@ -145,6 +151,10 @@ class ShowData extends StatelessWidget {
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold,
                                 ),
+                              ),
+                              const SizedBox(height: 6),
+                              Text(
+                                "Speciality: ${vendor.speciality}",
                               ),
                               const SizedBox(height: 6),
                               Text(

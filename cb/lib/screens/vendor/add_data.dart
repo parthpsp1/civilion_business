@@ -14,14 +14,13 @@ class AddData extends StatefulWidget {
 class _AddDataState extends State<AddData> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController nameController = TextEditingController();
-  TextEditingController actualWorkController = TextEditingController();
   TextEditingController firmNameController = TextEditingController();
   TextEditingController addressController = TextEditingController();
   TextEditingController chargesController = TextEditingController();
   TextEditingController mobileController = TextEditingController();
 
   String selectedLabel = "Architect";
-  String specialityLabel = "";
+  String specialityLabel = "Interior Designer";
 
   List<String> labels = [
     "Architect",
@@ -40,7 +39,7 @@ class _AddDataState extends State<AddData> {
     final entry = {
       "name": nameController.text,
       "profession": selectedLabel,
-      "actual_work": actualWorkController.text,
+      "speciality": specialityLabel,
       "address": addressController.text,
       "charges": chargesController.text,
       "email": CustomFireBaseAuth().currentUser?.email,
@@ -84,6 +83,8 @@ class _AddDataState extends State<AddData> {
                             onChanged: (String? value) {
                               setState(() {
                                 selectedLabel = value!;
+                                specialityLabel =
+                                    specialityLabels[selectedLabel]!.first;
                               });
                             },
                             items: labels.map((String label) {
@@ -112,7 +113,7 @@ class _AddDataState extends State<AddData> {
                             },
                           ),
                           DropdownButtonFormField<String>(
-                            value: specialityLabel,
+                            value: specialityLabels[selectedLabel]!.first,
                             onChanged: (String? value) {
                               setState(() {
                                 specialityLabel = value!;
@@ -120,13 +121,11 @@ class _AddDataState extends State<AddData> {
                             },
                             items: specialityLabels[selectedLabel]!
                                 .map((String label) {
-                                  return DropdownMenuItem<String>(
-                                    value: label,
-                                    child: Text(label),
-                                  );
-                                })
-                                .toList(),
-
+                              return DropdownMenuItem<String>(
+                                value: label,
+                                child: Text(label),
+                              );
+                            }).toList(),
                             decoration: const InputDecoration(
                               labelText: 'Select Speciality',
                             ),
@@ -192,6 +191,11 @@ class _AddDataState extends State<AddData> {
                             decoration:
                                 const InputDecoration(labelText: 'Mobile'),
                             keyboardType: TextInputType.phone,
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(
+                                RegExp(r'[0-9]'),
+                              ),
+                            ],
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your mobile number';
@@ -212,7 +216,7 @@ class _AddDataState extends State<AddData> {
                                   setState(() {
                                     _formKey.currentState?.reset();
                                     nameController.clear();
-                                    actualWorkController.clear();
+                                    specialityLabel = "";
                                     firmNameController.clear();
                                     addressController.clear();
                                     chargesController.clear();
@@ -220,12 +224,14 @@ class _AddDataState extends State<AddData> {
                                     selectedLabel = "Architect";
                                     isLoading = false;
                                   });
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Text('Data Added'),
-                                      backgroundColor: Colors.green,
-                                    ),
-                                  );
+                                  if (context.mounted) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text('Data Added'),
+                                        backgroundColor: Colors.green,
+                                      ),
+                                    );
+                                  }
                                 }
                               } else {
                                 setState(() {

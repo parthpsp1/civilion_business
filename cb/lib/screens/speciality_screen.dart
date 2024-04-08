@@ -1,47 +1,25 @@
 import 'package:blur/blur.dart';
 import 'package:cb/data/label.dart';
-import 'package:cb/model/vendor_data_model.dart';
-import 'package:cb/screens/login_screen.dart';
-import 'package:cb/screens/speciality_screen.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cb/screens/data_screen.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class SpecialityScreen extends StatelessWidget {
+  const SpecialityScreen({super.key, required this.vendorProfession});
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
+  final String vendorProfession;
 
-class _HomeScreenState extends State<HomeScreen> {
-  Stream<List<Vendor>> readData() =>
-      FirebaseFirestore.instance.collection('vendor').snapshots().map((event) =>
-          event.docs.map((doc) => Vendor.fromJson(doc.data())).toList());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Civilion Business'),
-        actions: [
-          TextButton.icon(
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const VendorLoginScreen(),
-                ),
-              );
-            },
-            icon: const Icon(Icons.login),
-            label: const Text('Vendor Login'),
-          )
-        ],
+        title: const Text('Select Speciality'),
       ),
       body: GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          mainAxisExtent: 140,
+          mainAxisExtent: 200,
         ),
-        itemCount: labels.length,
+        itemCount: specialityLabels[vendorProfession]!.length,
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.all(4.0),
@@ -49,8 +27,9 @@ class _HomeScreenState extends State<HomeScreen> {
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (context) => SpecialityScreen(
-                      vendorProfession: labels[index],
+                    builder: (context) => DataScreen(
+                      vendorSpeciality:
+                          specialityLabels[vendorProfession]![index],
                     ),
                   ),
                 );
@@ -61,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     blur: 0.4,
                     blurColor: Colors.black,
                     child: Image.asset(
-                      labelImagePaths[labels[index]]!,
+                      'assets/logo/app_logo.jpg',
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -73,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         bottom: 4,
                       ),
                       child: Text(
-                        labels[index],
+                        specialityLabels[vendorProfession]![index],
                         style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,

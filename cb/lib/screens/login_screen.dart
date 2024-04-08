@@ -1,5 +1,4 @@
 import 'package:cb/auth/custom_firebase_auth.dart';
-import 'package:cb/screens/vendor/add_data.dart';
 import 'package:cb/screens/vendor/dashboard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

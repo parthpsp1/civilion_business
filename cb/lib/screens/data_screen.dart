@@ -4,23 +4,23 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class DataScreen extends StatelessWidget {
-  const DataScreen({super.key, required this.vendorProfession});
+  const DataScreen({super.key, required this.vendorSpeciality});
 
-  final String vendorProfession;
+  final String vendorSpeciality;
 
   Stream<List<Vendor>> readData() => FirebaseFirestore.instance
       .collection('vendor')
       .snapshots()
       .map((event) => event.docs
           .map((doc) => Vendor.fromJson(doc.data()))
-          .where((vendor) => vendor.profession == vendorProfession)
+          .where((vendor) => vendor.speciality == vendorSpeciality)
           .toList());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('All $vendorProfession data'),
+        title: Text('All $vendorSpeciality data'),
       ),
       body: StreamBuilder<List<Vendor>>(
         stream: readData(),
@@ -30,15 +30,15 @@ class DataScreen extends StatelessWidget {
           }
 
           if (snapshot.hasData) {
-            final vendorData = snapshot.data!;
-            return vendorData.isEmpty
+            final resultData = snapshot.data!;
+            return resultData.isEmpty
                 ? const Center(
                     child: Text('No Data Found'),
                   )
                 : ListView.builder(
-                    itemCount: vendorData.length,
+                    itemCount: resultData.length,
                     itemBuilder: (context, index) {
-                      final vendor = vendorData[index];
+                      final vendor = resultData[index];
                       return Card(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(4),
