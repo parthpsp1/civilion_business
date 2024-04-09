@@ -15,6 +15,7 @@ class _VendorLoginScreenState extends State<VendorLoginScreen> {
   TextEditingController passwordController = TextEditingController();
   bool isLogin = true;
   String? errorMessage = '';
+  bool isObscureText = true;
 
   @override
   Widget build(BuildContext context) {
@@ -88,15 +89,23 @@ class _VendorLoginScreenState extends State<VendorLoginScreen> {
               const SizedBox(height: 16.0),
               TextField(
                 controller: passwordController,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Password',
-                  border: OutlineInputBorder(
+                  border: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(
                       Radius.circular(16),
                     ),
                   ),
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        isObscureText = !isObscureText;
+                      });
+                    },
+                    icon: const Icon(Icons.remove_red_eye_outlined),
+                  ),
                 ),
-                obscureText: true,
+                obscureText: isObscureText,
               ),
               const SizedBox(height: 16.0),
               Row(

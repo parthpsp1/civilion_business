@@ -39,26 +39,28 @@ class SpecialityScreen extends StatelessWidget {
                   Blur(
                     blur: 0.4,
                     blurColor: Colors.black,
+                    colorOpacity: 0.8,
+                    overlay: Align(
+                      alignment: Alignment.center,
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          left: 6,
+                          bottom: 4,
+                        ),
+                        child: Text(
+                          specialityLabels[vendorProfession]![index],
+                          style: const TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
                     child: Image.asset(
                       'assets/logo/app_logo.jpg',
                       fit: BoxFit.cover,
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                        left: 6,
-                        bottom: 4,
-                      ),
-                      child: Text(
-                        specialityLabels[vendorProfession]![index],
-                        style: const TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
                     ),
                   ),
                 ],

@@ -100,7 +100,7 @@ class _AddDataState extends State<AddData> {
                             controller: nameController,
                             inputFormatters: [
                               FilteringTextInputFormatter.allow(
-                                RegExp(r'[a-zA-Z]'),
+                                RegExp(r'[a-zA-Z,.\s/\-]'),
                               ),
                             ],
                             decoration:
@@ -134,7 +134,7 @@ class _AddDataState extends State<AddData> {
                             controller: firmNameController,
                             inputFormatters: [
                               FilteringTextInputFormatter.allow(
-                                RegExp(r'[a-zA-Z0-9]'),
+                                RegExp(r'[a-zA-Z0-9,.\s/\-]'),
                               ),
                             ],
                             decoration:
@@ -150,7 +150,7 @@ class _AddDataState extends State<AddData> {
                             controller: addressController,
                             inputFormatters: [
                               FilteringTextInputFormatter.allow(
-                                RegExp(r'[a-zA-Z0-9]'),
+                                RegExp(r'[a-zA-Z0-9,.\s/\-]'),
                               ),
                             ],
                             decoration:

@@ -60,13 +60,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   Blur(
                     blur: 0.4,
                     blurColor: Colors.black,
+                    colorOpacity: 0.8,
                     child: Image.asset(
                       labelImagePaths[labels[index]]!,
                       fit: BoxFit.cover,
                     ),
                   ),
                   Align(
-                    alignment: Alignment.bottomLeft,
+                    alignment: Alignment.center,
                     child: Padding(
                       padding: const EdgeInsets.only(
                         left: 6,
@@ -79,6 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
+                        textAlign: TextAlign.center,
                       ),
                     ),
                   ),
