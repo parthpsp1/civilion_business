@@ -39,6 +39,10 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
   firebase_core: ^2.28.0
   firebase_auth: ^4.19.0
+  cloud_firestore: ^4.16.0
+  url_launcher: ^6.2.5
+  image_blur: ^1.0.2
+  blur: ^3.1.0
 
 dev_dependencies:
   flutter_test:
@@ -63,9 +67,20 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/logo/app_logo.jpg
+    - assets/labels/architect.jpg
+    - assets/labels/contractor.jpg
+    - assets/labels/designer.jpg
+    - assets/labels/geotechnical.jpg
+    - assets/labels/labor.jpeg
+    - assets/labels/machineries.jpg
+    - assets/labels/project_manager.jpg
+    - assets/labels/structural.jpg
+    - assets/labels/surveyor.jpg
+    - assets/labels/transporters.jpg
+
+    
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
