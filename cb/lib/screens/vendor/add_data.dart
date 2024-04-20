@@ -166,7 +166,7 @@ class _AddDataState extends State<AddData> {
                             controller: chargesController,
                             inputFormatters: [
                               FilteringTextInputFormatter.allow(
-                                RegExp(r'[a-zA-Z0-9]'),
+                                RegExp(r'[a-zA-Z0-9,.\s/\-]'),
                               ),
                             ],
                             decoration:
