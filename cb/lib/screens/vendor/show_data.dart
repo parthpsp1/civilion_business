@@ -1,25 +1,17 @@
-import 'package:cb/auth/custom_firebase_auth.dart';
+import 'package:cb/database/firebase_query_handler.dart';
 import 'package:cb/model/vendor_data_model.dart';
+import 'package:cb/screens/vendor/edit_data.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class ShowData extends StatelessWidget {
   const ShowData({super.key});
 
-  Stream<List<Vendor>> readData() => FirebaseFirestore.instance
-      .collection('vendor')
-      .snapshots()
-      .map((event) => event.docs
-          .map((doc) => Vendor.fromJson(doc.data()))
-          .where((vendor) =>
-              vendor.email == CustomFireBaseAuth().currentUser?.email)
-          .toList());
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: StreamBuilder<List<Vendor>>(
-        stream: readData(),
+        stream: CustomFirebaseQueryHandle.readData(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Column(
@@ -62,85 +54,105 @@ class ShowData extends StatelessWidget {
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  IconButton(
-                                    onPressed: () async {
-                                      bool confirmed = await showDialog(
-                                        context: context,
-                                        builder: (context) => AlertDialog(
-                                          title: const Text('Confirm Delete'),
-                                          content: Text(
-                                              'Are you sure you want to delete ${vendor.name}?'),
-                                          actions: <Widget>[
-                                            TextButton(
-                                              onPressed: () =>
-                                                  Navigator.of(context)
-                                                      .pop(false),
-                                              child: const Text('Cancel'),
-                                            ),
-                                            TextButton(
-                                              onPressed: () =>
-                                                  Navigator.of(context)
-                                                      .pop(true),
-                                              child: const Text('Delete'),
-                                            ),
-                                          ],
-                                        ),
-                                      );
-
-                                      if (confirmed) {
-                                        try {
-                                          QuerySnapshot querySnapshot =
-                                              await FirebaseFirestore.instance
-                                                  .collection('vendor')
-                                                  .where('name',
-                                                      isEqualTo: vendor.name)
-                                                  .get();
-
-                                          if (querySnapshot.docs.isNotEmpty) {
-                                            String docId =
-                                                querySnapshot.docs.first.id;
-                                            await FirebaseFirestore.instance
-                                                .collection('vendor')
-                                                .doc(docId)
-                                                .delete();
-
-                                            if (context.mounted) {
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(
-                                                SnackBar(
-                                                  content: Text(
-                                                      '${vendor.name} deleted'),
-                                                ),
-                                              );
-                                            }
-                                          } else {
-                                            if (context.mounted) {
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(
-                                                SnackBar(
-                                                  content: Text(
-                                                      '${vendor.name} not found'),
-                                                ),
-                                              );
-                                            }
-                                          }
-                                        } catch (error) {
-                                          if (context.mounted) {
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              SnackBar(
-                                                content: Text(
-                                                    'Failed to delete ${vendor.name}'),
+                                  Row(
+                                    children: [
+                                      IconButton(
+                                        onPressed: () {
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                              builder: (context) => EditScreen(
+                                                documentId: vendor.documentId,
                                               ),
-                                            );
+                                            ),
+                                          );
+                                        },
+                                        icon: const Icon(Icons.edit_outlined),
+                                      ),
+                                      IconButton(
+                                        onPressed: () async {
+                                          bool confirmed = await showDialog(
+                                            context: context,
+                                            builder: (context) => AlertDialog(
+                                              title:
+                                                  const Text('Confirm Delete'),
+                                              content: Text(
+                                                  'Are you sure you want to delete ${vendor.name}?'),
+                                              actions: <Widget>[
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.of(context)
+                                                          .pop(false),
+                                                  child: const Text('Cancel'),
+                                                ),
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.of(context)
+                                                          .pop(true),
+                                                  child: const Text('Delete'),
+                                                ),
+                                              ],
+                                            ),
+                                          );
+
+                                          if (confirmed) {
+                                            try {
+                                              QuerySnapshot querySnapshot =
+                                                  await FirebaseFirestore
+                                                      .instance
+                                                      .collection('vendor')
+                                                      .where('name',
+                                                          isEqualTo:
+                                                              vendor.name)
+                                                      .get();
+
+                                              if (querySnapshot
+                                                  .docs.isNotEmpty) {
+                                                String docId =
+                                                    querySnapshot.docs.first.id;
+                                                await FirebaseFirestore.instance
+                                                    .collection('vendor')
+                                                    .doc(docId)
+                                                    .delete();
+
+                                                if (context.mounted) {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(
+                                                    SnackBar(
+                                                      content: Text(
+                                                          '${vendor.name} deleted'),
+                                                    ),
+                                                  );
+                                                }
+                                              } else {
+                                                if (context.mounted) {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(
+                                                    SnackBar(
+                                                      content: Text(
+                                                          '${vendor.name} not found'),
+                                                    ),
+                                                  );
+                                                }
+                                              }
+                                            } catch (error) {
+                                              if (context.mounted) {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  SnackBar(
+                                                    content: Text(
+                                                        'Failed to delete ${vendor.name}'),
+                                                  ),
+                                                );
+                                              }
+                                            }
                                           }
-                                        }
-                                      }
-                                    },
-                                    icon: const Icon(
-                                      Icons.delete_outline,
-                                      color: Colors.red,
-                                    ),
+                                        },
+                                        icon: const Icon(
+                                          Icons.delete_outline,
+                                          color: Colors.red,
+                                        ),
+                                      ),
+                                    ],
                                   )
                                 ],
                               ),

@@ -43,6 +43,7 @@ dependencies:
   url_launcher: ^6.2.5
   image_blur: ^1.0.2
   blur: ^3.1.0
+  file_picker: ^8.0.1
 
 dev_dependencies:
   flutter_test:

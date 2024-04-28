@@ -12,7 +12,7 @@ class DataScreen extends StatelessWidget {
       .collection('vendor')
       .snapshots()
       .map((event) => event.docs
-          .map((doc) => Vendor.fromJson(doc.data()))
+          .map((doc) => Vendor.fromJson(doc.id, doc.data()))
           .where((vendor) => vendor.speciality == vendorSpeciality)
           .toList());
 

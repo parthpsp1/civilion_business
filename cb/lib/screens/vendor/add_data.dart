@@ -1,6 +1,6 @@
 import 'package:cb/auth/custom_firebase_auth.dart';
 import 'package:cb/data/label.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cb/database/firebase_query_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -35,25 +35,9 @@ class _AddDataState extends State<AddData> {
     "Labor",
   ];
 
-  Future<bool> addData() async {
-    final entry = {
-      "name": nameController.text,
-      "profession": selectedLabel,
-      "speciality": specialityLabel,
-      "address": addressController.text,
-      "charges": chargesController.text,
-      "email": CustomFireBaseAuth().currentUser?.email,
-      "firm_name": firmNameController.text,
-      "mobile": mobileController.text
-    };
-
-    try {
-      await FirebaseFirestore.instance.collection('vendor').add(entry);
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
+  bool isPhotoIdUploaded = false;
+  bool isSignatureUploaded = false;
+  bool isEducationalDocumentUploaded = false;
 
   bool isLoading = false;
 
@@ -78,6 +62,85 @@ class _AddDataState extends State<AddData> {
                       key: _formKey,
                       child: ListView(
                         children: <Widget>[
+                          // Row(
+                          //   children: [
+                          //     const Text('Photo ID'),
+                          //     const SizedBox(
+                          //       width: 4,
+                          //     ),
+                          //     isPhotoIdUploaded
+                          //         ? const Icon(
+                          //             Icons.check,
+                          //             color: Color.fromARGB(255, 2, 156, 7),
+                          //           )
+                          //         : Container(),
+                          //   ],
+                          // ),
+                          // const SizedBox(
+                          //   height: 4,
+                          // ),
+                          // ElevatedButton.icon(
+                          //   onPressed: () async {
+                          //     bool isPhotoIdUploaded = await filePicker();
+                          //     setState(() {
+                          //       isPhotoIdUploaded = isPhotoIdUploaded;
+                          //     });
+                          //   },
+                          //   icon: const Icon(Icons.photo_camera_front_outlined),
+                          //   label: const Text('Upload Photo ID'),
+                          // ),
+                          // const SizedBox(
+                          //   height: 10,
+                          // ),
+                          // Row(
+                          //   children: [
+                          //     const Text('Signature'),
+                          //     const SizedBox(
+                          //       width: 4,
+                          //     ),
+                          //     isSignatureUploaded
+                          //         ? const Icon(
+                          //             Icons.check,
+                          //             color: Color.fromARGB(255, 2, 156, 7),
+                          //           )
+                          //         : Container(),
+                          //   ],
+                          // ),
+                          // ElevatedButton.icon(
+                          //   onPressed: () async {
+                          //     isSignatureUploaded = await filePicker();
+                          //   },
+                          //   icon: const Icon(Icons.edit_outlined),
+                          //   label: const Text('Upload Signature'),
+                          // ),
+                          // const SizedBox(
+                          //   height: 10,
+                          // ),
+                          // Row(
+                          //   children: [
+                          //     const Text('Educational Document'),
+                          //     const SizedBox(
+                          //       width: 4,
+                          //     ),
+                          //     isEducationalDocumentUploaded
+                          //         ? const Icon(
+                          //             Icons.check,
+                          //             color: Color.fromARGB(255, 2, 156, 7),
+                          //           )
+                          //         : Container(),
+                          //   ],
+                          // ),
+                          // ElevatedButton.icon(
+                          //   onPressed: () async {
+                          //     isEducationalDocumentUploaded =
+                          //         await filePicker();
+                          //   },
+                          //   icon: const Icon(Icons.folder_open_outlined),
+                          //   label: const Text('Upload Document'),
+                          // ),
+                          // const SizedBox(
+                          //   height: 10,
+                          // ),
                           DropdownButtonFormField<String>(
                             value: selectedLabel,
                             onChanged: (String? value) {
@@ -211,7 +274,16 @@ class _AddDataState extends State<AddData> {
                               });
                               if (_formKey.currentState != null &&
                                   _formKey.currentState!.validate()) {
-                                bool isSuccess = await addData();
+                                bool isSuccess =
+                                    await CustomFirebaseQueryHandle.addData(
+                                        nameController.text,
+                                        selectedLabel,
+                                        specialityLabel,
+                                        addressController.text,
+                                        chargesController.text,
+                                        CustomFireBaseAuth().currentUser?.email,
+                                        firmNameController.text,
+                                        mobileController.text);
                                 if (isSuccess) {
                                   setState(() {
                                     _formKey.currentState?.reset();
