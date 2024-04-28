@@ -37,7 +37,7 @@ class ShowData extends StatelessWidget {
                         ),
                         margin: const EdgeInsets.all(10),
                         elevation: 2,
-                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        clipBehavior: Clip.antiAlias,
                         child: Padding(
                           padding: const EdgeInsets.all(12),
                           child: Column(

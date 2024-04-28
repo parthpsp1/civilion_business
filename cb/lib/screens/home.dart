@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisCount: 2,
           mainAxisExtent: 140,
         ),
-        itemCount: labels.length,
+        itemCount: LocalData.labels.length,
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.all(4.0),
@@ -53,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => SpecialityScreen(
-                      vendorProfession: labels[index],
+                      vendorProfession: LocalData.labels[index],
                     ),
                   ),
                 );
@@ -65,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     blurColor: Colors.black,
                     colorOpacity: 0.8,
                     child: Image.asset(
-                      labelImagePaths[labels[index]]!,
+                      LocalData.labelImagePaths[LocalData.labels[index]]!,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -77,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         bottom: 4,
                       ),
                       child: Text(
-                        labels[index],
+                        LocalData.labels[index],
                         style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,

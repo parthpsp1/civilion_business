@@ -44,8 +44,18 @@ class VendorDashboard extends StatelessWidget {
               ],
               bottom: const TabBar(
                 tabs: [
-                  Tab(text: 'My Data'),
-                  Tab(text: 'Add Data'),
+                  Tab(
+                    text: 'My Data',
+                    icon: Icon(
+                      Icons.folder_open_outlined,
+                    ),
+                  ),
+                  Tab(
+                    text: 'Add Data',
+                    icon: Icon(
+                      Icons.create_new_folder_outlined,
+                    ),
+                  ),
                 ],
               ),
             ),

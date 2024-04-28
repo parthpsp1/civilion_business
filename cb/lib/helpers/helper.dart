@@ -1,5 +1,3 @@
-import 'dart:io';
-import 'package:file_picker/file_picker.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 Future<void> launchCustomUrl(url) async {
@@ -9,13 +7,13 @@ Future<void> launchCustomUrl(url) async {
   }
 }
 
-Future<bool> filePicker() async {
-  FilePickerResult? result = await FilePicker.platform.pickFiles();
-  if (result != null) {
-    File file = File(result.files.single.path!);
-    print(file);
-    return true;
-  } else {
-    return false;
-  }
-}
+// Future<bool> filePicker() async {
+//   FilePickerResult? result = await FilePicker.platform.pickFiles();
+//   if (result != null) {
+//     File file = File(result.files.single.path!);
+//     print(file);
+//     return true;
+//   } else {
+//     return false;
+//   }
+// }

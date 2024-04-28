@@ -19,7 +19,7 @@ class SpecialityScreen extends StatelessWidget {
           crossAxisCount: 2,
           mainAxisExtent: 200,
         ),
-        itemCount: specialityLabels[vendorProfession]!.length,
+        itemCount: LocalData.specialityLabels[vendorProfession]!.length,
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.all(4.0),
@@ -29,7 +29,7 @@ class SpecialityScreen extends StatelessWidget {
                   MaterialPageRoute(
                     builder: (context) => DataScreen(
                       vendorSpeciality:
-                          specialityLabels[vendorProfession]![index],
+                          LocalData.specialityLabels[vendorProfession]![index],
                     ),
                   ),
                 );
@@ -48,7 +48,7 @@ class SpecialityScreen extends StatelessWidget {
                           bottom: 4,
                         ),
                         child: Text(
-                          specialityLabels[vendorProfession]![index],
+                          LocalData.specialityLabels[vendorProfession]![index],
                           style: const TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
