@@ -12,7 +12,7 @@ class AddData extends StatefulWidget {
 }
 
 class _AddDataState extends State<AddData> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _addDataFormKey = GlobalKey<FormState>();
   TextEditingController nameController = TextEditingController();
   TextEditingController firmNameController = TextEditingController();
   TextEditingController addressController = TextEditingController();
@@ -21,24 +21,9 @@ class _AddDataState extends State<AddData> {
 
   String selectedLabel = "Architect";
   String specialityLabel = "Interior Designer";
-
-  List<String> labels = [
-    "Architect",
-    "Structural",
-    "Designer",
-    "Transporters",
-    "Machineries",
-    "Contractor",
-    "Surveyor",
-    "Geotechnical",
-    "Project Manager",
-    "Labor",
-  ];
-
   bool isPhotoIdUploaded = false;
   bool isSignatureUploaded = false;
   bool isEducationalDocumentUploaded = false;
-
   bool isLoading = false;
 
   @override
@@ -59,7 +44,7 @@ class _AddDataState extends State<AddData> {
                   )
                 : Expanded(
                     child: Form(
-                      key: _formKey,
+                      key: _addDataFormKey,
                       child: ListView(
                         children: <Widget>[
                           // Row(
@@ -146,11 +131,11 @@ class _AddDataState extends State<AddData> {
                             onChanged: (String? value) {
                               setState(() {
                                 selectedLabel = value!;
-                                specialityLabel =
-                                    specialityLabels[selectedLabel]!.first;
+                                specialityLabel = LocalData
+                                    .specialityLabels[selectedLabel]!.first;
                               });
                             },
-                            items: labels.map((String label) {
+                            items: LocalData.labels.map((String label) {
                               return DropdownMenuItem<String>(
                                 value: label,
                                 child: Text(label),
@@ -168,6 +153,8 @@ class _AddDataState extends State<AddData> {
                             ],
                             decoration:
                                 const InputDecoration(labelText: 'Name'),
+                            maxLength: 25,
+                            maxLengthEnforcement: MaxLengthEnforcement.enforced,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your name';
@@ -176,13 +163,14 @@ class _AddDataState extends State<AddData> {
                             },
                           ),
                           DropdownButtonFormField<String>(
-                            value: specialityLabels[selectedLabel]!.first,
+                            value: LocalData
+                                .specialityLabels[selectedLabel]!.first,
                             onChanged: (String? value) {
                               setState(() {
                                 specialityLabel = value!;
                               });
                             },
-                            items: specialityLabels[selectedLabel]!
+                            items: LocalData.specialityLabels[selectedLabel]!
                                 .map((String label) {
                               return DropdownMenuItem<String>(
                                 value: label,
@@ -218,6 +206,8 @@ class _AddDataState extends State<AddData> {
                             ],
                             decoration:
                                 const InputDecoration(labelText: 'Address'),
+                            maxLength: 50,
+                            maxLengthEnforcement: MaxLengthEnforcement.enforced,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter your address';
@@ -272,8 +262,8 @@ class _AddDataState extends State<AddData> {
                               setState(() {
                                 isLoading = true;
                               });
-                              if (_formKey.currentState != null &&
-                                  _formKey.currentState!.validate()) {
+                              if (_addDataFormKey.currentState != null &&
+                                  _addDataFormKey.currentState!.validate()) {
                                 bool isSuccess =
                                     await CustomFirebaseQueryHandle.addData(
                                         nameController.text,
@@ -286,7 +276,7 @@ class _AddDataState extends State<AddData> {
                                         mobileController.text);
                                 if (isSuccess) {
                                   setState(() {
-                                    _formKey.currentState?.reset();
+                                    _addDataFormKey.currentState?.reset();
                                     nameController.clear();
                                     specialityLabel = "";
                                     firmNameController.clear();

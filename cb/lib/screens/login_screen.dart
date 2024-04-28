@@ -81,7 +81,7 @@ class _VendorLoginScreenState extends State<VendorLoginScreen> {
                   labelText: 'Email',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(
-                      Radius.circular(16),
+                      Radius.circular(8),
                     ),
                   ),
                 ),
@@ -93,7 +93,7 @@ class _VendorLoginScreenState extends State<VendorLoginScreen> {
                   labelText: 'Password',
                   border: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(
-                      Radius.circular(16),
+                      Radius.circular(8),
                     ),
                   ),
                   suffixIcon: IconButton(

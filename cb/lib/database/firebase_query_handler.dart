@@ -31,6 +31,37 @@ class CustomFirebaseQueryHandle {
     }
   }
 
+  static Future<bool> updateData(
+      String documentId,
+      String name,
+      String selectedLabel,
+      String specialityLabel,
+      String address,
+      String charges,
+      String? email,
+      String firmName,
+      String mobile) async {
+    DocumentReference documentReference =
+        FirebaseFirestore.instance.collection('vendor').doc(documentId);
+    final entry = {
+      "name": name,
+      "profession": selectedLabel,
+      "speciality": specialityLabel,
+      "address": address,
+      "charges": charges,
+      "email": email,
+      "firm_name": firmName,
+      "mobile": mobile
+    };
+
+    try {
+      await documentReference.update(entry);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   static Future<DocumentSnapshot?> fetchData(String documentId) async {
     try {
       DocumentSnapshot? documentSnapshot = await FirebaseFirestore.instance
