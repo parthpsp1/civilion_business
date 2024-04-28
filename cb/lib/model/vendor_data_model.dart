@@ -1,5 +1,6 @@
 class Vendor {
   int id;
+  final String documentId;
   final String profession;
   final String name;
   final String speciality;
@@ -11,6 +12,7 @@ class Vendor {
 
   Vendor({
     this.id = 0,
+    required this.documentId,
     required this.profession,
     required this.name,
     required this.speciality,
@@ -21,7 +23,8 @@ class Vendor {
     required this.email,
   });
 
-  static Vendor fromJson(Map<String, dynamic> json) => Vendor(
+  static Vendor fromJson(String id, Map<String, dynamic> json) => Vendor(
+        documentId: id,
         profession: json['profession'],
         name: json['name'],
         speciality: json['speciality'],

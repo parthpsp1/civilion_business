@@ -14,9 +14,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Stream<List<Vendor>> readData() =>
-      FirebaseFirestore.instance.collection('vendor').snapshots().map((event) =>
-          event.docs.map((doc) => Vendor.fromJson(doc.data())).toList());
+  Stream<List<Vendor>> readData() => FirebaseFirestore.instance
+      .collection('vendor')
+      .snapshots()
+      .map((event) => event.docs
+          .map((doc) => Vendor.fromJson(doc.id, doc.data()))
+          .toList());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
