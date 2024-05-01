@@ -217,11 +217,7 @@ class _AddDataState extends State<AddData> {
                           ),
                           TextFormField(
                             controller: chargesController,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.allow(
-                                RegExp(r'[a-zA-Z0-9,.\s/\-]'),
-                              ),
-                            ],
+                            keyboardType: TextInputType.text,
                             decoration:
                                 const InputDecoration(labelText: 'Charges'),
                             validator: (value) {
