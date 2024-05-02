@@ -1,4 +1,5 @@
 import 'package:cb/auth/custom_firebase_auth.dart';
+import 'package:cb/local_storage/local_storage.dart';
 import 'package:cb/model/vendor_data_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -13,6 +14,9 @@ class CustomFirebaseQueryHandle {
       String firmName,
       String mobile) async {
     final entry = {
+      "photoId": await LocalStorage().getPhotoId(),
+      "signatureImage": await LocalStorage().getSignatureImage(),
+      "educationalDocument": await LocalStorage().getEducationalDocument(),
       "name": name,
       "profession": selectedLabel,
       "speciality": specialityLabel,
