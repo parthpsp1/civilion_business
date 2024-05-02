@@ -3,10 +3,8 @@ import 'package:cb/data/label.dart';
 import 'package:cb/database/firebase_query_handler.dart';
 import 'package:cb/helpers/helper.dart';
 import 'package:cb/local_storage/local_storage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 
 class AddData extends StatefulWidget {
   const AddData({super.key});
@@ -108,12 +106,12 @@ class _AddDataState extends State<AddData> {
                               : ElevatedButton.icon(
                                   onPressed: () async {
                                     String result = await filePicker();
-                                    if (result.isNotEmpty) {
+                                    if (result.isNotEmpty && result != '') {
                                       LocalStorage().savePhotoId(result);
+                                      setState(() {
+                                        isPhotoIdUploaded = true;
+                                      });
                                     }
-                                    setState(() {
-                                      isPhotoIdUploaded = true;
-                                    });
                                   },
                                   icon: const Icon(
                                       Icons.photo_camera_front_outlined),
@@ -174,12 +172,12 @@ class _AddDataState extends State<AddData> {
                               : ElevatedButton.icon(
                                   onPressed: () async {
                                     String result = await filePicker();
-                                    if (result.isNotEmpty) {
+                                    if (result.isNotEmpty && result != '') {
                                       LocalStorage().saveSignatureImage(result);
+                                      setState(() {
+                                        isSignatureUploaded = true;
+                                      });
                                     }
-                                    setState(() {
-                                      isSignatureUploaded = true;
-                                    });
                                   },
                                   icon: const Icon(Icons.edit_outlined),
                                   label: const Text('Upload Signature'),
@@ -239,13 +237,13 @@ class _AddDataState extends State<AddData> {
                               : ElevatedButton.icon(
                                   onPressed: () async {
                                     String result = await filePicker();
-                                    if (result.isNotEmpty) {
+                                    if (result.isNotEmpty && result != '') {
                                       LocalStorage()
                                           .saveEducationalDocument(result);
+                                      setState(() {
+                                        isEducationalDocumentUploaded = true;
+                                      });
                                     }
-                                    setState(() {
-                                      isEducationalDocumentUploaded = true;
-                                    });
                                   },
                                   icon: const Icon(Icons.folder_open_outlined),
                                   label: const Text('Upload Document'),
@@ -376,7 +374,10 @@ class _AddDataState extends State<AddData> {
                                 isLoading = true;
                               });
                               if (_addDataFormKey.currentState != null &&
-                                  _addDataFormKey.currentState!.validate()) {
+                                  _addDataFormKey.currentState!.validate() &&
+                                  isPhotoIdUploaded == true &&
+                                  isSignatureUploaded == true &&
+                                  isEducationalDocumentUploaded == true) {
                                 bool isSuccess =
                                     await CustomFirebaseQueryHandle.addData(
                                         nameController.text,
