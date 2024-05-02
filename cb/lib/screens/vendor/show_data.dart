@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'dart:typed_data';
 import 'package:cb/database/firebase_query_handler.dart';
 import 'package:cb/model/vendor_data_model.dart';
 import 'package:cb/screens/vendor/edit_data.dart';
@@ -66,7 +68,8 @@ class ShowData extends StatelessWidget {
                                             ),
                                           );
                                         },
-                                        icon: const Icon(Icons.edit_outlined),
+                                        icon: const Icon(
+                                            Icons.edit_note_outlined),
                                       ),
                                       IconButton(
                                         onPressed: () async {
@@ -115,6 +118,8 @@ class ShowData extends StatelessWidget {
                                                     .delete();
 
                                                 if (context.mounted) {
+                                                  ScaffoldMessenger.of(context)
+                                                      .clearSnackBars();
                                                   ScaffoldMessenger.of(context)
                                                       .showSnackBar(
                                                     SnackBar(
@@ -190,6 +195,251 @@ class ShowData extends StatelessWidget {
                               Text(
                                 "Email: ${vendor.email}",
                               ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Row(
+                                children: [
+                                  vendor.photoId == ''
+                                      ? Container()
+                                      : TextButton.icon(
+                                          onPressed: () {
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                Uint8List decodedPhotoIdString =
+                                                    base64Decode(
+                                                        vendor.photoId);
+                                                return Dialog.fullscreen(
+                                                  child: Stack(
+                                                    children: [
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .end,
+                                                        children: [
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .only(
+                                                              top: 20,
+                                                              right: 20,
+                                                            ),
+                                                            child:
+                                                                TextButton.icon(
+                                                              onPressed: () {
+                                                                Navigator.of(
+                                                                        context)
+                                                                    .pop();
+                                                              },
+                                                              icon: const Icon(
+                                                                Icons
+                                                                    .close_outlined,
+                                                                color: Colors
+                                                                    .white,
+                                                              ),
+                                                              label: const Text(
+                                                                'Close',
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                ),
+                                                              ),
+                                                              style:
+                                                                  const ButtonStyle(
+                                                                backgroundColor:
+                                                                    MaterialStatePropertyAll(
+                                                                  Colors.red,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Image.memory(
+                                                            decodedPhotoIdString,
+                                                            fit: BoxFit
+                                                                .scaleDown,
+                                                          )
+                                                        ],
+                                                      )
+                                                    ],
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          },
+                                          label: const Text('Photo ID'),
+                                          icon: const Icon(Icons
+                                              .photo_camera_front_outlined),
+                                        ),
+                                  vendor.signatureImage == ''
+                                      ? Container()
+                                      : TextButton.icon(
+                                          onPressed: () {
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                Uint8List
+                                                    decodedSignatureImageString =
+                                                    base64Decode(
+                                                        vendor.signatureImage);
+                                                return Dialog.fullscreen(
+                                                  child: Stack(
+                                                    children: [
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .end,
+                                                        children: [
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .only(
+                                                              top: 20,
+                                                              right: 20,
+                                                            ),
+                                                            child:
+                                                                TextButton.icon(
+                                                              onPressed: () {
+                                                                Navigator.of(
+                                                                        context)
+                                                                    .pop();
+                                                              },
+                                                              icon: const Icon(
+                                                                Icons
+                                                                    .close_outlined,
+                                                                color: Colors
+                                                                    .white,
+                                                              ),
+                                                              label: const Text(
+                                                                'Close',
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                ),
+                                                              ),
+                                                              style:
+                                                                  const ButtonStyle(
+                                                                backgroundColor:
+                                                                    MaterialStatePropertyAll(
+                                                                  Colors.red,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Image.memory(
+                                                            decodedSignatureImageString,
+                                                            fit: BoxFit
+                                                                .scaleDown,
+                                                          )
+                                                        ],
+                                                      )
+                                                    ],
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          },
+                                          label: const Text('Signatue'),
+                                          icon: const Icon(Icons.edit_outlined),
+                                        ),
+                                  vendor.educationalDocument == ''
+                                      ? Container()
+                                      : TextButton.icon(
+                                          onPressed: () {
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                Uint8List
+                                                    decodedEducationalDocument =
+                                                    base64Decode(vendor
+                                                        .educationalDocument);
+                                                return Dialog.fullscreen(
+                                                  child: Stack(
+                                                    children: [
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .end,
+                                                        children: [
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .only(
+                                                              top: 20,
+                                                              right: 20,
+                                                            ),
+                                                            child:
+                                                                TextButton.icon(
+                                                              onPressed: () {
+                                                                Navigator.of(
+                                                                        context)
+                                                                    .pop();
+                                                              },
+                                                              icon: const Icon(
+                                                                Icons
+                                                                    .close_outlined,
+                                                                color: Colors
+                                                                    .white,
+                                                              ),
+                                                              label: const Text(
+                                                                'Close',
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: Colors
+                                                                      .white,
+                                                                ),
+                                                              ),
+                                                              style:
+                                                                  const ButtonStyle(
+                                                                backgroundColor:
+                                                                    MaterialStatePropertyAll(
+                                                                  Colors.red,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Image.memory(
+                                                            decodedEducationalDocument,
+                                                            fit: BoxFit
+                                                                .scaleDown,
+                                                          )
+                                                        ],
+                                                      )
+                                                    ],
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          },
+                                          label: const Text('Edu. Doc'),
+                                          icon: const Icon(
+                                              Icons.folder_open_outlined),
+                                        )
+                                ],
+                              )
                             ],
                           ),
                         ),

@@ -1,8 +1,12 @@
 import 'package:cb/auth/custom_firebase_auth.dart';
 import 'package:cb/data/label.dart';
 import 'package:cb/database/firebase_query_handler.dart';
+import 'package:cb/helpers/helper.dart';
+import 'package:cb/local_storage/local_storage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 
 class AddData extends StatefulWidget {
   const AddData({super.key});
@@ -34,98 +38,221 @@ class _AddDataState extends State<AddData> {
         child: Column(
           children: [
             isLoading
-                ? const Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    ],
+                ? const Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      ],
+                    ),
                   )
                 : Expanded(
                     child: Form(
                       key: _addDataFormKey,
                       child: ListView(
                         children: <Widget>[
-                          // Row(
-                          //   children: [
-                          //     const Text('Photo ID'),
-                          //     const SizedBox(
-                          //       width: 4,
-                          //     ),
-                          //     isPhotoIdUploaded
-                          //         ? const Icon(
-                          //             Icons.check,
-                          //             color: Color.fromARGB(255, 2, 156, 7),
-                          //           )
-                          //         : Container(),
-                          //   ],
-                          // ),
-                          // const SizedBox(
-                          //   height: 4,
-                          // ),
-                          // ElevatedButton.icon(
-                          //   onPressed: () async {
-                          //     bool isPhotoIdUploaded = await filePicker();
-                          //     setState(() {
-                          //       isPhotoIdUploaded = isPhotoIdUploaded;
-                          //     });
-                          //   },
-                          //   icon: const Icon(Icons.photo_camera_front_outlined),
-                          //   label: const Text('Upload Photo ID'),
-                          // ),
-                          // const SizedBox(
-                          //   height: 10,
-                          // ),
-                          // Row(
-                          //   children: [
-                          //     const Text('Signature'),
-                          //     const SizedBox(
-                          //       width: 4,
-                          //     ),
-                          //     isSignatureUploaded
-                          //         ? const Icon(
-                          //             Icons.check,
-                          //             color: Color.fromARGB(255, 2, 156, 7),
-                          //           )
-                          //         : Container(),
-                          //   ],
-                          // ),
-                          // ElevatedButton.icon(
-                          //   onPressed: () async {
-                          //     isSignatureUploaded = await filePicker();
-                          //   },
-                          //   icon: const Icon(Icons.edit_outlined),
-                          //   label: const Text('Upload Signature'),
-                          // ),
-                          // const SizedBox(
-                          //   height: 10,
-                          // ),
-                          // Row(
-                          //   children: [
-                          //     const Text('Educational Document'),
-                          //     const SizedBox(
-                          //       width: 4,
-                          //     ),
-                          //     isEducationalDocumentUploaded
-                          //         ? const Icon(
-                          //             Icons.check,
-                          //             color: Color.fromARGB(255, 2, 156, 7),
-                          //           )
-                          //         : Container(),
-                          //   ],
-                          // ),
-                          // ElevatedButton.icon(
-                          //   onPressed: () async {
-                          //     isEducationalDocumentUploaded =
-                          //         await filePicker();
-                          //   },
-                          //   icon: const Icon(Icons.folder_open_outlined),
-                          //   label: const Text('Upload Document'),
-                          // ),
-                          // const SizedBox(
-                          //   height: 10,
-                          // ),
+                          Row(
+                            children: [
+                              const Text('Photo ID'),
+                              const SizedBox(
+                                width: 4,
+                              ),
+                              isPhotoIdUploaded
+                                  ? TextButton(
+                                      onPressed: () {},
+                                      style: const ButtonStyle(
+                                        visualDensity: VisualDensity.compact,
+                                        backgroundColor:
+                                            MaterialStatePropertyAll(
+                                                Colors.green),
+                                        side: MaterialStatePropertyAll(
+                                            BorderSide.none),
+                                      ),
+                                      child: const Text(
+                                        'Added',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    )
+                                  : const Text('(Image File)'),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 4,
+                          ),
+                          isPhotoIdUploaded == true
+                              ? ElevatedButton.icon(
+                                  onPressed: () {
+                                    setState(() {
+                                      isPhotoIdUploaded = false;
+                                    });
+                                    LocalStorage().removePhotoId();
+                                  },
+                                  icon: const Icon(
+                                    Icons.delete_outline_outlined,
+                                    color: Colors.white,
+                                  ),
+                                  label: const Text(
+                                    'Delete',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  style: const ButtonStyle(
+                                    backgroundColor: MaterialStatePropertyAll(
+                                      Colors.red,
+                                    ),
+                                  ),
+                                )
+                              : ElevatedButton.icon(
+                                  onPressed: () async {
+                                    String result = await filePicker();
+                                    if (result.isNotEmpty) {
+                                      LocalStorage().savePhotoId(result);
+                                    }
+                                    setState(() {
+                                      isPhotoIdUploaded = true;
+                                    });
+                                  },
+                                  icon: const Icon(
+                                      Icons.photo_camera_front_outlined),
+                                  label: const Text('Upload Photo ID'),
+                                ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            children: [
+                              const Text('Signature'),
+                              const SizedBox(
+                                width: 4,
+                              ),
+                              isSignatureUploaded
+                                  ? TextButton(
+                                      onPressed: () {},
+                                      style: const ButtonStyle(
+                                        visualDensity: VisualDensity.compact,
+                                        backgroundColor:
+                                            MaterialStatePropertyAll(
+                                                Colors.green),
+                                        side: MaterialStatePropertyAll(
+                                            BorderSide.none),
+                                      ),
+                                      child: const Text(
+                                        'Added',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    )
+                                  : const Text('(Image File)'),
+                            ],
+                          ),
+                          isSignatureUploaded == true
+                              ? ElevatedButton.icon(
+                                  onPressed: () {
+                                    setState(() {
+                                      isSignatureUploaded = false;
+                                    });
+                                    LocalStorage().removeSignatureImage();
+                                  },
+                                  icon: const Icon(
+                                    Icons.delete_outline_outlined,
+                                    color: Colors.white,
+                                  ),
+                                  label: const Text(
+                                    'Delete',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  style: const ButtonStyle(
+                                    backgroundColor: MaterialStatePropertyAll(
+                                      Colors.red,
+                                    ),
+                                  ),
+                                )
+                              : ElevatedButton.icon(
+                                  onPressed: () async {
+                                    String result = await filePicker();
+                                    if (result.isNotEmpty) {
+                                      LocalStorage().saveSignatureImage(result);
+                                    }
+                                    setState(() {
+                                      isSignatureUploaded = true;
+                                    });
+                                  },
+                                  icon: const Icon(Icons.edit_outlined),
+                                  label: const Text('Upload Signature'),
+                                ),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          Row(
+                            children: [
+                              const Text('Educational Document'),
+                              const SizedBox(
+                                width: 4,
+                              ),
+                              isEducationalDocumentUploaded
+                                  ? TextButton(
+                                      onPressed: () {},
+                                      style: const ButtonStyle(
+                                        visualDensity: VisualDensity.compact,
+                                        backgroundColor:
+                                            MaterialStatePropertyAll(
+                                                Colors.green),
+                                        side: MaterialStatePropertyAll(
+                                            BorderSide.none),
+                                      ),
+                                      child: const Text(
+                                        'Added',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    )
+                                  : const Text('(Image File)'),
+                            ],
+                          ),
+                          isEducationalDocumentUploaded == true
+                              ? ElevatedButton.icon(
+                                  onPressed: () {
+                                    setState(() {
+                                      isEducationalDocumentUploaded = false;
+                                    });
+                                    LocalStorage().removeEducationalDocument();
+                                  },
+                                  icon: const Icon(
+                                    Icons.delete_outline_outlined,
+                                    color: Colors.white,
+                                  ),
+                                  label: const Text(
+                                    'Delete',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  style: const ButtonStyle(
+                                    backgroundColor: MaterialStatePropertyAll(
+                                      Colors.red,
+                                    ),
+                                  ),
+                                )
+                              : ElevatedButton.icon(
+                                  onPressed: () async {
+                                    String result = await filePicker();
+                                    if (result.isNotEmpty) {
+                                      LocalStorage()
+                                          .saveEducationalDocument(result);
+                                    }
+                                    setState(() {
+                                      isEducationalDocumentUploaded = true;
+                                    });
+                                  },
+                                  icon: const Icon(Icons.folder_open_outlined),
+                                  label: const Text('Upload Document'),
+                                ),
+                          const SizedBox(
+                            height: 10,
+                          ),
                           DropdownButtonFormField<String>(
                             value: selectedLabel,
                             onChanged: (String? value) {
@@ -183,11 +310,6 @@ class _AddDataState extends State<AddData> {
                           ),
                           TextFormField(
                             controller: firmNameController,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.allow(
-                                RegExp(r'[a-zA-Z0-9,.\s/\-]'),
-                              ),
-                            ],
                             decoration:
                                 const InputDecoration(labelText: 'Firm Name'),
                             validator: (value) {
@@ -199,11 +321,6 @@ class _AddDataState extends State<AddData> {
                           ),
                           TextFormField(
                             controller: addressController,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.allow(
-                                RegExp(r'[a-zA-Z0-9,.\s/\-]'),
-                              ),
-                            ],
                             decoration:
                                 const InputDecoration(labelText: 'Address'),
                             maxLength: 50,
@@ -281,6 +398,9 @@ class _AddDataState extends State<AddData> {
                                     mobileController.clear();
                                     selectedLabel = "Architect";
                                     isLoading = false;
+                                    isPhotoIdUploaded = false;
+                                    isSignatureUploaded = false;
+                                    isEducationalDocumentUploaded = false;
                                   });
                                   if (context.mounted) {
                                     ScaffoldMessenger.of(context).showSnackBar(
