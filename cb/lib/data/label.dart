@@ -2,31 +2,24 @@ class LocalData {
   static List<String> labels = [
     "Architect",
     "Structural",
-    "Designer",
     "Transporters",
     "Machineries",
     "Contractor",
     "Surveyor",
-    "Geotechnical",
+    "Quality Testing",
     "Project Manager",
-    "Labor",
   ];
 
   static Map<String, List<String>> specialityLabels = {
     "Architect": [
       "Interior Designer",
       "Exterior Designer",
-      "Urban Designer",
+      "Landscaping",
       "MEP"
     ],
     "Structural": [
-      "Steel Designer",
-      "Structural Consultant",
-    ],
-    "Designer": [
-      "Interior",
-      "Exterior",
-      "MEP",
+      "RCC & Steel Designer",
+      "Structural Audit",
     ],
     "Transporters": [
       "Personal Vehicle",
@@ -58,38 +51,26 @@ class LocalData {
       "Developer"
     ],
     "Surveyor": [
-      "Land surveyor",
-      "Electrical",
-      "Theodolite",
-      "Tacheometric",
-      "Chain",
-      "Mining surveyors",
-      "Valuation",
-      "Marine",
       "Quantity",
-      "Archaeological",
+      "Land surveyor",
+      "Valuation",
     ],
-    "Geotechnical": [
+    "Quality Testing": [
       "Quality Lab",
       "Geotechnical Engg.",
     ],
     "Project Manager": [
       "Project Manager",
     ],
-    "Labor": [
-      "Labor",
-    ],
   };
   static Map<String, String> labelImagePaths = {
     "Architect": "assets/labels/architect.jpg",
     "Structural": "assets/labels/structural.jpg",
-    "Designer": "assets/labels/designer.jpg",
     "Transporters": "assets/labels/transporters.jpg",
     "Machineries": "assets/labels/machineries.jpg",
     "Contractor": "assets/labels/contractor.jpg",
     "Surveyor": "assets/labels/surveyor.jpg",
-    "Geotechnical": "assets/labels/geotechnical.jpg",
+    "Quality Testing": "assets/labels/quality_testing.jpg",
     "Project Manager": "assets/labels/project_manager.jpg",
-    "Labor": "assets/labels/labor.jpeg",
   };
 }

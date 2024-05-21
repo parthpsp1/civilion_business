@@ -31,7 +31,7 @@ class Vendor {
 
   static Vendor fromJson(String id, Map<String, dynamic> json) => Vendor(
         documentId: id,
-        profession: json['profession'],
+        profession: json['profession'] ?? '',
         photoId: json['photoId'] ?? '',
         signatureImage: json['signatureImage'] ?? '',
         educationalDocument: json['educationalDocument'] ?? '',

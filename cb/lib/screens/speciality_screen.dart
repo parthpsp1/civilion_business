@@ -12,7 +12,13 @@ class SpecialityScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Select Speciality'),
+        title: Text(
+          'Select $vendorProfession Speciality',
+          style: const TextStyle(
+            fontSize: 20,
+          ),
+        ),
+        titleSpacing: 0,
       ),
       body: GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

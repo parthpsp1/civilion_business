@@ -20,7 +20,13 @@ class DataScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('All $vendorSpeciality data'),
+        title: Text(
+          'All $vendorSpeciality data',
+          style: const TextStyle(
+            fontSize: 20,
+          ),
+        ),
+        titleSpacing: 0,
       ),
       body: StreamBuilder<List<Vendor>>(
         stream: readData(),
