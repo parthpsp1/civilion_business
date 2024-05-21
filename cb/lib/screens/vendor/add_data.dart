@@ -62,10 +62,9 @@ class _AddDataState extends State<AddData> {
                                       onPressed: () {},
                                       style: const ButtonStyle(
                                         visualDensity: VisualDensity.compact,
-                                        backgroundColor:
-                                            MaterialStatePropertyAll(
-                                                Colors.green),
-                                        side: MaterialStatePropertyAll(
+                                        backgroundColor: WidgetStatePropertyAll(
+                                            Colors.green),
+                                        side: WidgetStatePropertyAll(
                                             BorderSide.none),
                                       ),
                                       child: const Text(
@@ -98,7 +97,7 @@ class _AddDataState extends State<AddData> {
                                     style: TextStyle(color: Colors.white),
                                   ),
                                   style: const ButtonStyle(
-                                    backgroundColor: MaterialStatePropertyAll(
+                                    backgroundColor: WidgetStatePropertyAll(
                                       Colors.red,
                                     ),
                                   ),
@@ -131,10 +130,9 @@ class _AddDataState extends State<AddData> {
                                       onPressed: () {},
                                       style: const ButtonStyle(
                                         visualDensity: VisualDensity.compact,
-                                        backgroundColor:
-                                            MaterialStatePropertyAll(
-                                                Colors.green),
-                                        side: MaterialStatePropertyAll(
+                                        backgroundColor: WidgetStatePropertyAll(
+                                            Colors.green),
+                                        side: WidgetStatePropertyAll(
                                             BorderSide.none),
                                       ),
                                       child: const Text(
@@ -164,7 +162,7 @@ class _AddDataState extends State<AddData> {
                                     style: TextStyle(color: Colors.white),
                                   ),
                                   style: const ButtonStyle(
-                                    backgroundColor: MaterialStatePropertyAll(
+                                    backgroundColor: WidgetStatePropertyAll(
                                       Colors.red,
                                     ),
                                   ),
@@ -196,10 +194,9 @@ class _AddDataState extends State<AddData> {
                                       onPressed: () {},
                                       style: const ButtonStyle(
                                         visualDensity: VisualDensity.compact,
-                                        backgroundColor:
-                                            MaterialStatePropertyAll(
-                                                Colors.green),
-                                        side: MaterialStatePropertyAll(
+                                        backgroundColor: WidgetStatePropertyAll(
+                                            Colors.green),
+                                        side: WidgetStatePropertyAll(
                                             BorderSide.none),
                                       ),
                                       child: const Text(
@@ -229,7 +226,7 @@ class _AddDataState extends State<AddData> {
                                     style: TextStyle(color: Colors.white),
                                   ),
                                   style: const ButtonStyle(
-                                    backgroundColor: MaterialStatePropertyAll(
+                                    backgroundColor: WidgetStatePropertyAll(
                                       Colors.red,
                                     ),
                                   ),
