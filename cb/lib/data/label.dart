@@ -12,10 +12,9 @@ class LocalData {
 
   static Map<String, List<String>> specialityLabels = {
     "Architect": [
-      "Interior Designer",
-      "Exterior Designer",
+      "Interior & Exterior Designer",
       "Landscaping",
-      "MEP"
+      "MEP",
     ],
     "Structural": [
       "RCC & Steel Designer",
