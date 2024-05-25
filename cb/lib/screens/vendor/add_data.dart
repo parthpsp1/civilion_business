@@ -253,8 +253,6 @@ class _AddDataState extends State<AddData> {
                             onChanged: (String? value) {
                               setState(() {
                                 selectedLabel = value!;
-                                specialityLabel = LocalData
-                                    .specialityLabels[selectedLabel]!.first;
                               });
                             },
                             items: LocalData.labels.map((String label) {
@@ -284,25 +282,28 @@ class _AddDataState extends State<AddData> {
                               return null;
                             },
                           ),
-                          DropdownButtonFormField<String>(
-                            value: LocalData
-                                .specialityLabels[selectedLabel]!.first,
-                            onChanged: (String? value) {
-                              setState(() {
-                                specialityLabel = value!;
-                              });
-                            },
-                            items: LocalData.specialityLabels[selectedLabel]!
-                                .map((String label) {
-                              return DropdownMenuItem<String>(
-                                value: label,
-                                child: Text(label),
-                              );
-                            }).toList(),
-                            decoration: const InputDecoration(
-                              labelText: 'Select Speciality',
-                            ),
-                          ),
+                          selectedLabel == "Project Manager"
+                              ? Container()
+                              : DropdownButtonFormField<String>(
+                                  value: LocalData
+                                      .specialityLabels[selectedLabel]!.first,
+                                  onChanged: (String? value) {
+                                    setState(() {
+                                      specialityLabel = value!;
+                                    });
+                                  },
+                                  items: LocalData
+                                      .specialityLabels[selectedLabel]!
+                                      .map((String label) {
+                                    return DropdownMenuItem<String>(
+                                      value: label,
+                                      child: Text(label),
+                                    );
+                                  }).toList(),
+                                  decoration: const InputDecoration(
+                                    labelText: 'Select Speciality',
+                                  ),
+                                ),
                           TextFormField(
                             controller: firmNameController,
                             decoration:
