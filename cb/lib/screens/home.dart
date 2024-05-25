@@ -1,6 +1,7 @@
 import 'package:blur/blur.dart';
 import 'package:cb/data/label.dart';
 import 'package:cb/model/vendor_data_model.dart';
+import 'package:cb/screens/data_screen.dart';
 import 'package:cb/screens/login_screen.dart';
 import 'package:cb/screens/speciality_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -50,13 +51,17 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.all(4.0),
             child: GestureDetector(
               onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => SpecialityScreen(
-                      vendorProfession: LocalData.labels[index],
-                    ),
-                  ),
-                );
+                LocalData.labels[index] == "Project Manager"
+                    ? Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const DataScreen(),
+                      ))
+                    : Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => SpecialityScreen(
+                            vendorProfession: LocalData.labels[index],
+                          ),
+                        ),
+                      );
               },
               child: Stack(
                 children: [

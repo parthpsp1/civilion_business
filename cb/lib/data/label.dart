@@ -54,13 +54,7 @@ class LocalData {
       "Land surveyor",
       "Valuation",
     ],
-    "Quality Testing": [
-      "Quality Lab",
-      "Geotechnical Engg.",
-    ],
-    "Project Manager": [
-      "Project Manager",
-    ],
+    "Quality Testing": ["Soil Testing", "Water Testing", "NDT"],
   };
   static Map<String, String> labelImagePaths = {
     "Architect": "assets/labels/architect.jpg",
