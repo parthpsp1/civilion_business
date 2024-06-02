@@ -2,7 +2,7 @@ import 'package:blur/blur.dart';
 import 'package:cb/data/label.dart';
 import 'package:cb/model/vendor_data_model.dart';
 import 'package:cb/screens/data_screen.dart';
-import 'package:cb/screens/login_screen.dart';
+import 'package:cb/screens/vendor/login_screen.dart';
 import 'package:cb/screens/speciality_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';

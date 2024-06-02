@@ -2,7 +2,7 @@ import 'package:cb/auth/custom_firebase_auth.dart';
 import 'package:cb/screens/vendor/account.dart';
 import 'package:cb/screens/vendor/add_data.dart';
 import 'package:cb/screens/vendor/show_data.dart';
-import 'package:cb/screens/login_screen.dart';
+import 'package:cb/screens/vendor/login_screen.dart';
 import 'package:flutter/material.dart';
 
 class VendorDashboard extends StatelessWidget {
