@@ -134,6 +134,12 @@ class _VendorLoginScreenState extends State<VendorLoginScreen> {
                     onPressed: () async {
                       if (emailController.text != '' ||
                           emailController.text.isNotEmpty) {
+                        ScaffoldMessenger.of(context).clearSnackBars();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('OTP Sent on Email'),
+                          ),
+                        );
                         bool isSuccessfulLogin =
                             await createUserWithEmailAndPassword();
                         if (isSuccessfulLogin) {
